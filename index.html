@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PulseTool</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #121212;
+            --text-color: #ffffff;
+            --text-gray: #8e8e93;
+            --accent-blue: #007aff;
+            --border-color: #1c1c1e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 16px 16px 90px 16px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Шапка профиля */
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #2c2c2e;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .user-info .name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+        }
+
+        .user-info .username {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 0 0 2px 0;
+        }
+
+        .user-info .uid {
+            font-size: 12px;
+            color: #545456;
+            margin: 0;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            color: var(--text-gray);
+            font-size: 18px;
+        }
+
+        /* Статистика / Статус */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .stat-item .label {
+            font-size: 10px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .stat-item .value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Списки кнопок (Меню) */
+        .menu-group {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item i.icon {
+            width: 28px;
+            font-size: 18px;
+            color: var(--text-gray);
+            margin-right: 12px;
+            text-align: center;
+        }
+
+        .menu-item .title {
+            flex-grow: 1;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .menu-item i.arrow {
+            color: #3a3a3c;
+            font-size: 14px;
+        }
+
+        /* Нижнее навигационное меню */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background-color: #0a0a0a;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 10px;
+            width: 20%;
+            transition: color 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar">
+                <i class="fa-solid fa-ghost"></i>
+            </div>
+            <div class="user-info">
+                <p class="name" id="user-name"># Каин</p>
+                <p class="username" id="user-username">@clipths</p>
+                <p class="uid" id="user-id">ID 7995137347</p>
+            </div>
+            <div class="theme-toggle">
+                <i class="fa-regular fa-sun"></i>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="label">Регистрация</div>
+                <div class="value" id="reg-date">2 июня 2026 г.</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">Бот</div>
+                <div class="value" style="color: #ff453a;">Откл.</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">Подписка</div>
+                <div class="value">Нет</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-group">
+        <div class="menu-item">
+            <i class="fa-solid fa-robot icon"></i>
+            <span class="title">Открыть бота</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+        <div class="menu-item">
+            <i class="fa-regular fa-file-lines icon"></i>
+            <span class="title">Инструкция</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-headset icon"></i>
+            <span class="title">Поддержка</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+    </div>
+
+    <div class="menu-group">
+        <div class="menu-item">
+            <i class="fa-regular fa-comment-dots icon"></i>
+            <span class="title">Канал</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+        <div class="menu-item">
+            <i class="fa-regular fa-file-text icon"></i>
+            <span class="title">Пользовательское соглашение</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-shield-halved icon"></i>
+            <span class="title">Политика конфиденциальности</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Главная</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Подписка</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Поиск</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Генератор юзов</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Профиль</span>
+        </a>
+    </div>
+
+    <script>
+        // Инициализация Telegram WebApp API
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Развернуть на весь экран
+
+        // Автоматическое получение данных текущего юзера из Telegram
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+            document.getElementById('user-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+            document.getElementById('user-username').innerText = user.username ? '@' + user.username : '';
+            document.getElementById('user-id').innerText = 'ID ' + user.id;
+        }
+
+        // Логика переключения активных вкладок снизу
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Здесь можно прописать логику смены экранов при клике
+                tg.HapticFeedback.impactOccurred('light'); // Виброотклик при клике
+            });
+        });
+    </script>
+</body>
+</html>
