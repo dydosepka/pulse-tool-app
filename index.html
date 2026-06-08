@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* Темная тема (по умолчанию) */
         :root {
             --bg-color: #000000;
             --card-bg: #121212;
@@ -15,6 +16,20 @@
             --text-gray: #8e8e93;
             --accent-blue: #007aff;
             --border-color: #1c1c1e;
+            --status-off: #ff453a;
+            --status-on: #30d158;
+        }
+
+        /* Светлая тема */
+        [data-theme="light"] {
+            --bg-color: #f2f2f7;
+            --card-bg: #ffffff;
+            --text-color: #000000;
+            --text-gray: #636366;
+            --accent-blue: #007aff;
+            --border-color: #e5e5ea;
+            --status-off: #ff3b30;
+            --status-on: #34c759;
         }
 
         body {
@@ -25,14 +40,25 @@
             padding: 16px 16px 90px 16px;
             user-select: none;
             -webkit-user-select: none;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Шапка профиля */
+        /* Шапка PulseTool */
+        .app-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
         .profile-card {
             background-color: var(--card-bg);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
+            transition: background-color 0.3s;
         }
 
         .profile-header {
@@ -51,7 +77,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar i {
             font-size: 24px;
+            color: var(--text-gray);
         }
 
         .user-info .name {
@@ -68,7 +105,8 @@
 
         .user-info .uid {
             font-size: 12px;
-            color: #545456;
+            color: var(--text-gray);
+            opacity: 0.7;
             margin: 0;
         }
 
@@ -77,10 +115,15 @@
             right: 0;
             top: 10px;
             color: var(--text-gray);
-            font-size: 18px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        /* Статистика / Статус */
+        .theme-toggle:active {
+            transform: scale(0.9);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -98,11 +141,11 @@
         }
 
         .stat-item .value {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
         }
 
-        /* Списки кнопок (Меню) */
+        /* Меню групп */
         .menu-group {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -139,18 +182,19 @@
         }
 
         .menu-item i.arrow {
-            color: #3a3a3c;
+            color: var(--text-gray);
+            opacity: 0.5;
             font-size: 14px;
         }
 
-        /* Нижнее навигационное меню */
+        /* Нижний таб-бар */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 65px;
-            background-color: #0a0a0a;
+            background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
@@ -167,7 +211,6 @@
             text-decoration: none;
             font-size: 10px;
             width: 20%;
-            transition: color 0.2s;
         }
 
         .nav-item i {
@@ -176,39 +219,41 @@
         }
 
         .nav-item.active {
-            color: #ffffff;
+            color: var(--accent-blue);
         }
     </style>
 </head>
 <body>
 
+    <div class="app-header">PulseTool</div>
+
     <div class="profile-card">
         <div class="profile-header">
-            <div class="avatar">
+            <div class="avatar" id="user-avatar">
                 <i class="fa-solid fa-ghost"></i>
             </div>
             <div class="user-info">
-                <p class="name" id="user-name"># Каин</p>
-                <p class="username" id="user-username">@clipths</p>
-                <p class="uid" id="user-id">ID 7995137347</p>
+                <p class="name" id="user-name">Загрузка...</p>
+                <p class="username" id="user-username">@username</p>
+                <p class="uid" id="user-id">ID 00000000</p>
             </div>
-            <div class="theme-toggle">
-                <i class="fa-regular fa-sun"></i>
+            <div class="theme-toggle" id="theme-btn">
+                <i class="fa-solid fa-gear"></i>
             </div>
         </div>
         
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="label">Регистрация</div>
-                <div class="value" id="reg-date">2 июня 2026 г.</div>
+                <div class="value" id="reg-date">Загрузка...</div>
             </div>
             <div class="stat-item">
                 <div class="label">Бот</div>
-                <div class="value" style="color: #ff453a;">Откл.</div>
+                <div class="value" style="color: var(--status-on);">Вкл.</div>
             </div>
             <div class="stat-item">
                 <div class="label">Подписка</div>
-                <div class="value">Нет</div>
+                <div class="value" id="sub-status" style="color: var(--status-off);">Нет</div>
             </div>
         </div>
     </div>
@@ -237,64 +282,67 @@
             <span class="title">Канал</span>
             <i class="fa-solid fa-chevron-right arrow"></i>
         </div>
-        <div class="menu-item">
-            <i class="fa-regular fa-file-text icon"></i>
-            <span class="title">Пользовательское соглашение</span>
-            <i class="fa-solid fa-chevron-right arrow"></i>
-        </div>
-        <div class="menu-item">
-            <i class="fa-solid fa-shield-halved icon"></i>
-            <span class="title">Политика конфиденциальности</span>
-            <i class="fa-solid fa-chevron-right arrow"></i>
-        </div>
     </div>
 
     <div class="bottom-nav">
-        <a href="#" class="nav-item active">
-            <i class="fa-solid fa-house"></i>
-            <span>Главная</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-credit-card"></i>
-            <span>Подписка</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>Поиск</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span>Генератор юзов</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-user"></i>
-            <span>Профиль</span>
-        </a>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>Главная</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-credit-card"></i><span>Подписка</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i><span>Поиск</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Генератор</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-user"></i><span>Профиль</span></a>
     </div>
 
     <script>
-        // Инициализация Telegram WebApp API
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Развернуть на весь экран
+        tg.expand();
+        tg.ready();
 
-        // Автоматическое получение данных текущего юзера из Telegram
+        // 1. Динамическое получение данных
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
+            
             document.getElementById('user-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
             document.getElementById('user-username').innerText = user.username ? '@' + user.username : '';
             document.getElementById('user-id').innerText = 'ID ' + user.id;
+
+            if (user.photo_url) {
+                document.getElementById('user-avatar').innerHTML = `<img src="${user.photo_url}" alt="avatar">`;
+            }
+            
+            let options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
+        } else {
+            // Данные для локального тестирования в браузере
+            document.getElementById('user-name').innerText = "Иван Иванов";
+            document.getElementById('user-username').innerText = "@ivan_test";
+            document.getElementById('user-id').innerText = "ID 123456789";
+            document.getElementById('reg-date').innerText = "8 июня 2026 г.";
         }
 
-        // Логика переключения активных вкладок снизу
+        // 2. Кнопка шестеренки (переключение тем)
+        const themeBtn = document.getElementById('theme-btn');
+        if (tg.colorScheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            tg.HapticFeedback.impactOccurred('medium');
+        });
+
+        // Активные вкладки меню
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
                 navItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
-                
-                // Здесь можно прописать логику смены экранов при клике
-                tg.HapticFeedback.impactOccurred('light'); // Виброотклик при клике
+                tg.HapticFeedback.impactOccurred('light');
             });
         });
     </script>
