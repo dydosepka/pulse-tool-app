@@ -99,6 +99,13 @@
             margin: 0 0 2px 0;
         }
 
+        .user-info .uid-sub {
+            font-size: 12px;
+            color: var(--text-gray);
+            opacity: 0.8;
+            margin: 0;
+        }
+
         .theme-toggle {
             position: absolute;
             right: 0;
@@ -180,10 +187,6 @@
         }
 
         /* Поля ввода и Промокоды */
-        .promo-block {
-            margin-top: 16px;
-        }
-
         .promo-title {
             font-size: 14px;
             color: var(--text-gray);
@@ -218,15 +221,65 @@
             cursor: pointer;
         }
 
-        /* Реферальный блок */
+        /* Реферальный блок и копирование */
+        .ref-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
         .ref-box {
+            flex-grow: 1;
             background-color: var(--input-bg);
             border-radius: 10px;
             padding: 12px;
             font-size: 13px;
             word-break: break-all;
-            margin-top: 8px;
             border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--accent-blue);
+            border-radius: 10px;
+            padding: 0 14px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .copy-btn:active {
+            background-color: var(--border-color);
+        }
+
+        /* Выпадающая инфо-система */
+        .details-btn {
+            font-size: 13px;
+            color: var(--accent-blue);
+            margin-top: 10px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .ref-details {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-gray);
+        }
+
+        .ref-details strong {
+            color: var(--text-color);
         }
 
         /* Таб-бар */
@@ -278,6 +331,7 @@
             <div class="user-info">
                 <p class="name" id="user-name">Загрузка...</p>
                 <p class="username" id="user-username">@username</p>
+                <p class="uid-sub" id="user-id">ID: 000000000</p>
             </div>
             <div class="theme-toggle" id="theme-btn">
                 <i class="fa-solid fa-sun"></i>
@@ -333,7 +387,23 @@
             <div class="promo-title"><i class="fa-solid fa-users"></i> Реферальная система</div>
             <div style="font-size: 14px; margin-bottom: 6px;">Приглашено друзей: <strong id="ref-count">0</strong></div>
             <div style="font-size: 12px; color: var(--text-gray);">Твоя ссылка для друга:</div>
-            <div class="ref-box" id="ref-link">https://t.me/PulseToolBot?start=000000</div>
+            
+            <div class="ref-container">
+                <div class="ref-box" id="ref-link">https://t.me/PulseToolBot?start=000000</div>
+                <button class="copy-btn" id="copy-btn" title="Скопировать ссылку">
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+            </div>
+            
+            <div class="details-btn" id="details-toggle">Подробнее...</div>
+            <div class="ref-details" id="details-block">
+                Приглашайте друзей и получайте бонусы за каждое подключение!<br><br>
+                <strong>Как это работает:</strong><br>
+                1. Отправьте другу вашу реферальную ссылку.<br>
+                2. Друг получает бесплатный доступ на 48 часов.<br>
+                3. Если друг покупает ключ — вы получаете подписку <strong>Lite на 7 дней</strong>. <br><br>
+                — <i>PulseTool</i>
+            </div>
         </div>
 
         <div class="menu-group" style="padding: 16px;">
@@ -373,6 +443,7 @@
             const user = tg.initDataUnsafe.user;
             document.getElementById('user-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
             document.getElementById('user-username').innerText = user.username ? '@' + user.username : '';
+            document.getElementById('user-id').innerText = 'ID: ' + user.id;
             
             if (user.photo_url) {
                 document.getElementById('user-avatar').innerHTML = `<img src="${user.photo_url}" alt="avatar">`;
@@ -387,8 +458,46 @@
             // Демо данные для ПК браузера
             document.getElementById('user-name').innerText = "Константин";
             document.getElementById('user-username').innerText = "@kos_stepanov";
+            document.getElementById('user-id').innerText = "ID: 987654321";
             document.getElementById('reg-date').innerText = "8 июня 2026 г.";
         }
+
+        // Логика кнопки "Скопировать" реферальную ссылку
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const refLinkText = document.getElementById('ref-link').innerText;
+            
+            // Копирование в буфер обмена
+            navigator.clipboard.writeText(refLinkText).then(() => {
+                tg.HapticFeedback.notificationOccurred('success'); // Успешный виброотклик
+                
+                // Визуальный фидбек: меняем иконку на галочку
+                const icon = this.querySelector('i');
+                icon.className = 'fa-solid fa-check';
+                icon.style.color = 'var(--accent-blue)';
+                
+                setTimeout(() => {
+                    icon.className = 'fa-regular fa-copy';
+                    icon.style.color = '';
+                }, 1500);
+            }).catch(err => {
+                console.error('Не удалось скопировать: ', err);
+            });
+        });
+
+        // Логика разворачивания блока "Подробнее"
+        const detailsToggle = document.getElementById('details-toggle');
+        const detailsBlock = document.getElementById('details-block');
+        
+        detailsToggle.addEventListener('click', () => {
+            if (detailsBlock.style.display === 'block') {
+                detailsBlock.style.display = 'none';
+                detailsToggle.innerText = 'Подробнее...';
+            } else {
+                detailsBlock.style.display = 'block';
+                detailsToggle.innerText = 'Скрыть';
+            }
+            tg.HapticFeedback.impactOccurred('light');
+        });
 
         // Логика кнопки "Открыть бота" (Закрывает приложение и возвращает в чат)
         document.getElementById('close-app-btn').addEventListener('click', () => {
@@ -400,7 +509,7 @@
             const promoValue = document.getElementById('promo-field').value;
             if(promoValue.trim() !== "") {
                 tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
-                tg.close(); // Обычно закрывают окно после отправки данных в бота
+                tg.close();
             }
         });
 
@@ -410,9 +519,9 @@
         function updateThemeIcon() {
             const isLight = document.documentElement.getAttribute('data-theme') === 'light' || tg.colorScheme === 'light' && !document.documentElement.hasAttribute('data-theme');
             if (document.documentElement.getAttribute('data-theme') === 'light') {
-                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>'; // Показываем луну в светлой теме, чтобы включить ночь
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>'; 
             } else {
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';  // Показываем солнце в темной теме
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';  
             }
         }
 
