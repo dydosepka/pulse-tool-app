@@ -274,7 +274,7 @@
             color: var(--text-gray);
         }
 
-        /* ВКЛАДКА ПОДПИСОК (СТИЛИ) */
+        /* ВКЛАДКА ПОДПИСОК */
         .sub-tabs {
             display: flex;
             background-color: var(--card-bg);
@@ -624,7 +624,7 @@
         }
 
         // Отправка боту информации о покупке подписки
-        自由 function selectSub(planType, months, stars, crypto) {
+        function selectSub(planType, months, stars, crypto) {
             tg.sendData(JSON.stringify({
                 action: "buy_sub",
                 type: planType,
