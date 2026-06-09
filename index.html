@@ -40,14 +40,12 @@
             padding: 16px 16px 90px 16px;
             user-select: none;
             -webkit-user-select: none;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         .app-header {
             text-align: center;
             font-size: 20px;
             font-weight: 800;
-            letter-spacing: 0.5px;
             margin-bottom: 16px;
         }
 
@@ -74,40 +72,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        .avatar i {
-            font-size: 24px;
-            color: var(--text-gray);
-        }
+        .avatar i { font-size: 24px; color: var(--text-gray); }
 
-        .user-info .name {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0 0 4px 0;
-        }
-
-        .user-info .username {
-            font-size: 14px;
-            color: var(--text-gray);
-            margin: 0 0 2px 0;
-        }
-
-        .user-info .uid-sub {
-            font-size: 12px;
-            color: var(--text-gray);
-            margin: 0;
-        }
-
-        .theme-toggle {
-            position: absolute;
-            right: 0;
-            top: 10px;
-            color: var(--text-gray);
-            font-size: 22px;
-            cursor: pointer;
-        }
+        .user-info .name { font-size: 18px; font-weight: 700; margin: 0 0 4px 0; }
+        .user-info .username { font-size: 14px; color: var(--text-gray); margin: 0; }
 
         .stats-grid {
             display: grid;
@@ -117,64 +87,17 @@
             padding-top: 12px;
         }
 
-        .stat-item .label {
-            font-size: 10px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
+        .stat-item .label { font-size: 10px; color: var(--text-gray); text-transform: uppercase; margin-bottom: 4px; }
+        .stat-item .value { font-size: 13px; font-weight: 600; }
 
-        .stat-item .value {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .app-screen {
-            display: none;
-        }
-
-        .app-screen.active {
-            display: block;
-        }
+        .app-screen { display: none; }
+        .app-screen.active { display: block; }
 
         .menu-group {
             background-color: var(--card-bg);
             border-radius: 16px;
             margin-bottom: 16px;
             overflow: hidden;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            color: var(--text-color);
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .menu-item i.icon {
-            width: 28px;
-            font-size: 18px;
-            color: var(--text-gray);
-            margin-right: 12px;
-            text-align: center;
-        }
-
-        .menu-item .title {
-            flex-grow: 1;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .menu-item i.arrow {
-            color: var(--text-gray);
-            opacity: 0.5;
-            font-size: 14px;
         }
 
         .sub-tabs {
@@ -199,13 +122,6 @@
 
         .sub-tab-btn.active.lite-tab { background-color: var(--accent-blue); color: #ffffff; }
         .sub-tab-btn.active.prem-tab { background-color: var(--accent-orange); color: #ffffff; }
-
-        .features-list { padding: 0; margin: 0 0 16px 0; list-style: none; }
-        .features-list li { font-size: 14px; margin-bottom: 10px; display: flex; align-items: flex-start; }
-        .features-list li i { margin-right: 10px; margin-top: 3px; }
-
-        .lite-color { color: var(--accent-blue); }
-        .prem-color { color: var(--accent-orange); }
 
         .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .price-card {
@@ -233,7 +149,6 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .nav-item {
@@ -242,7 +157,6 @@
             align-items: center;
             color: var(--text-gray);
             font-size: 10px;
-            width: 20%;
             cursor: pointer;
         }
 
@@ -280,14 +194,10 @@
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
         .btn-stars { background: #ffb300; color: #000; }
         .btn-crypto { background: #007aff; color: #fff; }
-        .btn-close { background: #2c2c2e; color: #fff; margin-top: 6px; margin-bottom: 0; }
+        .btn-close { background: #2c2c2e; color: #fff; }
     </style>
 </head>
 <body>
@@ -296,29 +206,23 @@
 
     <div class="profile-card">
         <div class="profile-header">
-            <div class="avatar" id="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
                 <p class="name" id="user-name">Загрузка...</p>
                 <p class="username" id="user-username">@username</p>
-                <p class="uid-sub" id="user-id">ID: 000000000</p>
             </div>
-            <div class="theme-toggle" id="theme-btn"><i class="fa-solid fa-sun"></i></div>
         </div>
         
         <div class="stats-grid">
             <div class="stat-item"><div class="label">Регистрация</div><div class="value" id="reg-date">...</div></div>
             <div class="stat-item"><div class="label">Подписка</div><div class="value" id="sub-status">Нет</div></div>
-            <div class="stat-item"><div class="label">Баланс</div><div class="value" id="user-balance">0 ₽</div></div>
+            <div class="stat-item"><div class="label">Баланс</div><div class="value" id="user-balance">100 ₽</div></div>
         </div>
     </div>
 
     <div id="screen-home" class="app-screen active">
-        <div class="menu-group">
-            <div class="menu-item" onclick="tg.close();">
-                <i class="fa-solid fa-robot icon"></i>
-                <span class="title">Открыть бота</span>
-                <i class="fa-solid fa-chevron-right arrow"></i>
-            </div>
+        <div class="menu-group" style="padding: 16px; text-align: center;">
+            Добро пожаловать в панель управления PulseTool.
         </div>
     </div>
 
@@ -329,46 +233,52 @@
         </div>
 
         <div id="pane-lite" class="sub-pane active">
-            <div class="menu-group" style="padding: 16px;">
-                <div class="promo-title lite-color"><i class="fa-solid fa-bolt"></i> В подписку Lite:</div>
-                <ul class="features-list">
-                    <li><i class="fa-solid fa-check lite-color"></i> Полный доступ к парсерам</li>
-                </ul>
-                <div class="pricing-grid">
-                    <div class="price-card" onclick="openPayModal('Lite', 1, 99, 0.55)">
-                        <div class="duration">1 месяц</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 99 Stars</div>
-                        <div class="crypto">0.55 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="openPayModal('Lite', 3, 150, 1.0)">
-                        <div class="duration">3 месяца</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 150 Stars</div>
-                        <div class="crypto">1.0 USDT</div>
-                    </div>
+            <div class="pricing-grid">
+                <div class="price-card" onclick="openPayModal('Lite', 1, 99, 0.55)">
+                    <div class="duration">1 месяц</div>
+                    <div class="stars">99 Stars</div>
+                    <div class="crypto">0.55 USDT</div>
+                </div>
+                <div class="price-card" onclick="openPayModal('Lite', 3, 250, 1.5)">
+                    <div class="duration">3 месяца</div>
+                    <div class="stars">250 Stars</div>
+                    <div class="crypto">1.5 USDT</div>
+                </div>
+                <div class="price-card" onclick="openPayModal('Lite', 6, 450, 3.0)">
+                    <div class="duration">6 месяцев</div>
+                    <div class="stars">450 Stars</div>
+                    <div class="crypto">3.0 USDT</div>
+                </div>
+                <div class="price-card" onclick="openPayModal('Lite', 12, 800, 5.5)">
+                    <div class="duration">12 месяцев</div>
+                    <div class="stars">800 Stars</div>
+                    <div class="crypto">5.5 USDT</div>
                 </div>
             </div>
         </div>
 
         <div id="pane-premium" class="sub-pane">
-            <div class="menu-group" style="padding: 16px;">
-                <div class="promo-title prem-color"><i class="fa-solid fa-crown"></i> В Premium:</div>
-                <div class="pricing-grid">
-                    <div class="price-card" onclick="openPayModal('Premium', 1, 150, 1.0)">
-                        <div class="duration">1 месяц</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 150 Stars</div>
-                        <div class="crypto">1.0 USDT</div>
-                    </div>
+            <div class="pricing-grid">
+                <div class="price-card" onclick="openPayModal('Premium', 1, 199, 1.1)">
+                    <div class="duration">1 месяц</div>
+                    <div class="stars">199 Stars</div>
+                    <div class="crypto">1.1 USDT</div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="screen-profile" class="app-screen">
-        <div class="menu-group" style="padding: 16px;">
-            <div class="promo-title">Реферальная ссылка</div>
-            <div class="ref-container">
-                <div class="ref-box" id="ref-link">Загрузка...</div>
-                <button class="copy-btn" id="copy-btn"><i class="fa-regular fa-copy"></i></button>
+                <div class="price-card" onclick="openPayModal('Premium', 3, 500, 3.0)">
+                    <div class="duration">3 месяца</div>
+                    <div class="stars">500 Stars</div>
+                    <div class="crypto">3.0 USDT</div>
+                </div>
+                <div class="price-card" onclick="openPayModal('Premium', 6, 900, 5.5)">
+                    <div class="duration">6 месяцев</div>
+                    <div class="stars">900 Stars</div>
+                    <div class="crypto">5.5 USDT</div>
+                </div>
+                <div class="price-card" onclick="openPayModal('Premium', 12, 1600, 10.0)">
+                    <div class="duration">12 месяцев</div>
+                    <div class="stars">1600 Stars</div>
+                    <div class="crypto">10.0 USDT</div>
+                </div>
             </div>
         </div>
     </div>
@@ -376,8 +286,8 @@
     <div class="modal" id="pay-modal">
         <div class="modal-content">
             <div class="modal-title" id="modal-title">Выбор оплаты</div>
-            <button class="modal-btn btn-stars" onclick="startPayment('stars')"><i class="fa-solid fa-star"></i> Telegram Stars</button>
-            <button class="modal-btn btn-crypto" onclick="startPayment('crypto')"><i class="fa-solid fa-wallet"></i> CryptoBot (USDT)</button>
+            <button class="modal-btn btn-stars" id="pay-stars-btn">⭐ Оплатить в Telegram Stars</button>
+            <button class="modal-btn btn-crypto" id="pay-crypto-btn">💎 Оплатить через CryptoBot</button>
             <button class="modal-btn btn-close" onclick="closePayModal()">Отмена</button>
         </div>
     </div>
@@ -385,7 +295,6 @@
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchScreen('home', this)"><i class="fa-solid fa-house"></i><span>Главная</span></div>
         <div class="nav-item" onclick="switchScreen('subscription', this)"><i class="fa-solid fa-credit-card"></i><span>Подписка</span></div>
-        <div class="nav-item" onclick="switchScreen('profile', this)"><i class="fa-solid fa-user"></i><span>Профиль</span></div>
     </div>
 
     <script>
@@ -393,14 +302,16 @@
         tg.expand();
         tg.ready();
 
-        let selectedOrder = null;
+        // Впиши сюда публичный URL, на котором крутится твой Python-бот (например, от Railway или Ngrok)
+        const BACKEND_URL = "https://твой-сервер.railway.app"; 
+
+        let currentOrder = {};
 
         function switchScreen(screenName, element) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             document.getElementById('screen-' + screenName).classList.add('active');
             element.classList.add('active');
-            tg.HapticFeedback.impactOccurred('light');
         }
 
         function toggleSubPlan(plan) {
@@ -416,29 +327,69 @@
         }
 
         function openPayModal(planType, months, stars, crypto) {
-            selectedOrder = { planType, months, stars, crypto };
-            document.getElementById('modal-title').innerText = `${planType} на ${months} мес.`;
+            currentOrder = { planType, months, stars, crypto };
+            document.getElementById('modal-title').innerText = `${planType} — ${months} мес.`;
             document.getElementById('pay-modal').classList.add('active');
-            tg.HapticFeedback.impactOccurred('medium');
         }
 
         function closePayModal() {
             document.getElementById('pay-modal').classList.remove('active');
         }
 
-        // ЗАПУСК НА ТИВНОЙ ОПЛАТЫ ВНУТРИ WEBAPP
-        function startPayment(method) {
+        // БЕЗШОВНЫЙ ВЫЗОВ STARS ПРЯМО ВНУТРИ MINI APP
+        document.getElementById('pay-stars-btn').addEventListener('click', async () => {
             closePayModal();
-            if (!selectedOrder) return;
+            try {
+                const response = await fetch(`${BACKEND_URL}/create-stars-invoice`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        user_id: uId,
+                        type: currentOrder.planType,
+                        months: currentOrder.months,
+                        price: currentOrder.stars
+                    })
+                });
+                const result = await response.json();
+                
+                if (result.invoice_link) {
+                    // Открывает нативный экран оплаты прямо поверх Mini App!
+                    tg.openInvoice(result.invoice_link, function(status) {
+                        if (status === 'paid') {
+                            tg.showAlert("🎉 Подписка успешно активирована!");
+                            tg.close();
+                        }
+                    });
+                }
+            } catch (e) {
+                tg.showAlert("Ошибка подключения к серверу оплаты.");
+            }
+        });
 
-            // Формируем специальную инлайн-строку для бота
-            const queryData = `${method}_${selectedOrder.planType}_${selectedOrder.months}_${method === 'stars' ? selectedOrder.stars : selectedOrder.crypto}`;
-            
-            // Переключаем Mini App в режим инлайн-запроса к нашему боту
-            tg.switchInlineQuery(queryData, ['users', 'chats', 'bots']);
-        }
+        // БЕЗШОВНЫЙ ВЫЗОВ CRYPTOBOT ПРЯМО ВНУТРИ MINI APP
+        document.getElementById('pay-crypto-btn').addEventListener('click', async () => {
+            closePayModal();
+            try {
+                const response = await fetch(`${BACKEND_URL}/create-crypto-invoice`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        user_id: uId,
+                        type: currentOrder.planType,
+                        months: currentOrder.months,
+                        price: currentOrder.crypto
+                    })
+                });
+                const result = await response.json();
+                if (result.pay_url) {
+                    // Открывает нативный браузерный слой CryptoBot внутри Mini App
+                    tg.openLink(result.pay_url);
+                }
+            } catch(e) {
+                tg.showAlert("Ошибка генерации чека.");
+            }
+        });
 
-        // ЧТЕНИЕ ПАРАМЕТРОВ ССЫЛКИ
         const urlParams = new URLSearchParams(window.location.search);
         const uId = urlParams.get('id') || tg.initDataUnsafe?.user?.id || "000000";
         const uName = urlParams.get('name') || tg.initDataUnsafe?.user?.first_name || "Пользователь";
@@ -447,29 +398,8 @@
 
         document.getElementById('user-name').innerText = uName;
         document.getElementById('user-username').innerText = uUsername ? '@' + uUsername : '';
-        document.getElementById('user-id').innerText = 'ID: ' + uId;
-        document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${uId}`;
         document.getElementById('sub-status').innerText = subParam.replace(/_/g, " ");
-        document.getElementById('user-balance').innerText = '100 ₽';
-
-        let options = { day: 'numeric', month: 'long', year: 'numeric' };
-        document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
-
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            navigator.clipboard.writeText(document.getElementById('ref-link').innerText).then(() => {
-                tg.HapticFeedback.notificationOccurred('success');
-            });
-        });
-
-        const themeBtn = document.getElementById('theme-btn');
-        themeBtn.addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-theme') === 'light') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-            }
-            tg.HapticFeedback.impactOccurred('medium');
-        });
+        document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU');
     </script>
 </body>
 </html>
