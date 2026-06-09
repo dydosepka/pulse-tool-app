@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Темная тема (по умолчанию) */
         :root {
             --bg-color: #000000;
             --card-bg: #121212;
@@ -21,7 +20,6 @@
             --success-green: #2ecc71;
         }
 
-        /* Светлая тема */
         [data-theme="light"] {
             --bg-color: #f2f2f7;
             --card-bg: #ffffff;
@@ -58,7 +56,6 @@
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
-            transition: background-color 0.3s;
         }
 
         .profile-header {
@@ -78,12 +75,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .avatar i {
@@ -106,7 +97,6 @@
         .user-info .uid-sub {
             font-size: 12px;
             color: var(--text-gray);
-            opacity: 0.8;
             margin: 0;
         }
 
@@ -158,7 +148,6 @@
             display: flex;
             align-items: center;
             padding: 14px 16px;
-            text-decoration: none;
             color: var(--text-color);
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
@@ -188,97 +177,12 @@
             font-size: 14px;
         }
 
-        .promo-title {
-            font-size: 14px;
-            color: var(--text-gray);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .input-container {
-            display: flex;
-            gap: 8px;
-        }
-
-        .promo-input {
-            flex-grow: 1;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px;
-            color: var(--text-color);
-            font-size: 14px;
-            outline: none;
-        }
-
-        .promo-btn {
-            background-color: var(--accent-blue);
-            color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            padding: 0 20px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .ref-container {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .ref-box {
-            flex-grow: 1;
-            background-color: var(--input-bg);
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 13px;
-            word-break: break-all;
-            border: 1px dashed var(--border-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .copy-btn {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--accent-blue);
-            border-radius: 10px;
-            padding: 0 14px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .details-btn {
-            font-size: 13px;
-            color: var(--accent-blue);
-            margin-top: 10px;
-            cursor: pointer;
-            display: inline-block;
-            font-weight: 500;
-        }
-
-        .ref-details {
-            display: none;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--text-gray);
-        }
-
         .sub-tabs {
             display: flex;
             background-color: var(--card-bg);
             padding: 4px;
             border-radius: 10px;
             margin-bottom: 16px;
-            border: 1px solid var(--border-color);
         }
 
         .sub-tab-btn {
@@ -291,48 +195,19 @@
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .sub-tab-btn.active.lite-tab {
-            background-color: var(--accent-blue);
-            color: #ffffff;
-        }
+        .sub-tab-btn.active.lite-tab { background-color: var(--accent-blue); color: #ffffff; }
+        .sub-tab-btn.active.prem-tab { background-color: var(--accent-orange); color: #ffffff; }
 
-        .sub-tab-btn.active.prem-tab {
-            background-color: var(--accent-orange);
-            color: #ffffff;
-        }
-
-        .features-list {
-            padding: 0;
-            margin: 0 0 16px 0;
-            list-style: none;
-        }
-
-        .features-list li {
-            font-size: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: flex-start;
-            line-height: 1.4;
-        }
-
-        .features-list li i {
-            margin-right: 10px;
-            margin-top: 3px;
-            font-size: 14px;
-        }
+        .features-list { padding: 0; margin: 0 0 16px 0; list-style: none; }
+        .features-list li { font-size: 14px; margin-bottom: 10px; display: flex; align-items: flex-start; }
+        .features-list li i { margin-right: 10px; margin-top: 3px; }
 
         .lite-color { color: var(--accent-blue); }
         .prem-color { color: var(--accent-orange); }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
+        .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .price-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -340,44 +215,18 @@
             padding: 14px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.1s;
         }
 
-        .price-card:active {
-            transform: scale(0.97);
-        }
+        .price-card .duration { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+        .price-card .stars { font-size: 13px; font-weight: 600; color: #ffb300; margin-bottom: 4px; }
+        .price-card .crypto { font-size: 12px; color: var(--text-gray); }
 
-        .price-card .duration {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .price-card .stars {
-            font-size: 13px;
-            font-weight: 600;
-            color: #ffb300;
-            margin-bottom: 4px;
-        }
-
-        .price-card .crypto {
-            font-size: 12px;
-            color: var(--text-gray);
-        }
-
-        .sub-pane {
-            display: none;
-        }
-
-        .sub-pane.active {
-            display: block;
-        }
+        .sub-pane { display: none; }
+        .sub-pane.active { display: block; }
 
         .bottom-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 65px;
             background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
@@ -385,7 +234,6 @@
             justify-content: space-around;
             align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
-            z-index: 1000;
         }
 
         .nav-item {
@@ -393,20 +241,53 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-gray);
-            text-decoration: none;
             font-size: 10px;
             width: 20%;
             cursor: pointer;
         }
 
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 4px;
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item.active { color: var(--accent-blue); }
+        
+        /* Модалка выбора оплаты */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-
-        .nav-item.active {
-            color: var(--accent-blue);
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            text-align: center;
         }
+        .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+        .modal-btn {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-stars { background: #ffb300; color: #000; }
+        .btn-crypto { background: #007aff; color: #fff; }
+        .btn-close { background: #2c2c2e; color: #fff; margin-top: 6px; margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -415,58 +296,27 @@
 
     <div class="profile-card">
         <div class="profile-header">
-            <div class="avatar" id="user-avatar">
-                <i class="fa-solid fa-user"></i>
-            </div>
+            <div class="avatar" id="user-avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
                 <p class="name" id="user-name">Загрузка...</p>
                 <p class="username" id="user-username">@username</p>
                 <p class="uid-sub" id="user-id">ID: 000000000</p>
             </div>
-            <div class="theme-toggle" id="theme-btn">
-                <i class="fa-solid fa-sun"></i>
-            </div>
+            <div class="theme-toggle" id="theme-btn"><i class="fa-solid fa-sun"></i></div>
         </div>
         
         <div class="stats-grid">
-            <div class="stat-item">
-                <div class="label">Регистрация</div>
-                <div class="value" id="reg-date">...</div>
-            </div>
-            <div class="stat-item">
-                <div class="label">Подписка</div>
-                <div class="value" id="sub-status">Нет</div>
-            </div>
-            <div class="stat-item">
-                <div class="label">Баланс</div>
-                <div class="value" id="user-balance">0 ₽</div>
-            </div>
+            <div class="stat-item"><div class="label">Регистрация</div><div class="value" id="reg-date">...</div></div>
+            <div class="stat-item"><div class="label">Подписка</div><div class="value" id="sub-status">Нет</div></div>
+            <div class="stat-item"><div class="label">Баланс</div><div class="value" id="user-balance">0 ₽</div></div>
         </div>
     </div>
 
     <div id="screen-home" class="app-screen active">
         <div class="menu-group">
-            <div class="menu-item" id="close-app-btn">
+            <div class="menu-item" onclick="tg.close();">
                 <i class="fa-solid fa-robot icon"></i>
                 <span class="title">Открыть бота</span>
-                <i class="fa-solid fa-chevron-right arrow"></i>
-            </div>
-            <div class="menu-item">
-                <i class="fa-regular fa-file-lines icon"></i>
-                <span class="title">Инструкция</span>
-                <i class="fa-solid fa-chevron-right arrow"></i>
-            </div>
-            <div class="menu-item">
-                <i class="fa-solid fa-headset icon"></i>
-                <span class="title">Поддержка</span>
-                <i class="fa-solid fa-chevron-right arrow"></i>
-            </div>
-        </div>
-
-        <div class="menu-group">
-            <div class="menu-item">
-                <i class="fa-regular fa-comment-dots icon"></i>
-                <span class="title">Канал</span>
                 <i class="fa-solid fa-chevron-right arrow"></i>
             </div>
         </div>
@@ -480,33 +330,20 @@
 
         <div id="pane-lite" class="sub-pane active">
             <div class="menu-group" style="padding: 16px;">
-                <div class="promo-title lite-color"><i class="fa-solid fa-bolt"></i> В подписку Lite входит:</div>
+                <div class="promo-title lite-color"><i class="fa-solid fa-bolt"></i> В подписку Lite:</div>
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-check lite-color"></i> Эксклюзивные инструменты и парсеры</li>
-                    <li><i class="fa-solid fa-check lite-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
+                    <li><i class="fa-solid fa-check lite-color"></i> Полный доступ к парсерам</li>
                 </ul>
-                <div style="font-size: 11px; color:var(--text-gray); margin-bottom:12px; text-align:center;">Выбирай срок, бот отправит инвойс в чат</div>
-                
                 <div class="pricing-grid">
-                    <div class="price-card" onclick="selectSub('Lite', 1, 99, 0.55)">
+                    <div class="price-card" onclick="openPayModal('Lite', 1, 99, 0.55)">
                         <div class="duration">1 месяц</div>
                         <div class="stars"><i class="fa-solid fa-star"></i> 99 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 0.55 USDT</div>
+                        <div class="crypto">0.55 USDT</div>
                     </div>
-                    <div class="price-card" onclick="selectSub('Lite', 3, 150, 1.0)">
+                    <div class="price-card" onclick="openPayModal('Lite', 3, 150, 1.0)">
                         <div class="duration">3 месяца</div>
                         <div class="stars"><i class="fa-solid fa-star"></i> 150 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 1.0 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="selectSub('Lite', 6, 199, 1.5)">
-                        <div class="duration">6 месяцев</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 199 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 1.5 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="selectSub('Lite', 12, 249, 3.0)">
-                        <div class="duration">12 месяцев</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 249 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 3.0 USDT</div>
+                        <div class="crypto">1.0 USDT</div>
                     </div>
                 </div>
             </div>
@@ -514,36 +351,12 @@
 
         <div id="pane-premium" class="sub-pane">
             <div class="menu-group" style="padding: 16px;">
-                <div class="promo-title prem-color"><i class="fa-solid fa-crown"></i> В подписку Premium входит:</div>
-                <ul class="features-list">
-                    <li><i class="fa-solid fa-check prem-color"></i> Эксклюзивные инструменты и парсеры</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Профессиональные шаблоны и таблицы</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Приоритетные обновления контента</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Приват чат</li>
-                </ul>
-                <div style="font-size: 11px; color:var(--text-gray); margin-bottom:12px; text-align:center;">Выбирай срок, бот отправит инвойс в чат</div>
-                
+                <div class="promo-title prem-color"><i class="fa-solid fa-crown"></i> В Premium:</div>
                 <div class="pricing-grid">
-                    <div class="price-card" onclick="selectSub('Premium', 1, 150, 1.0)">
+                    <div class="price-card" onclick="openPayModal('Premium', 1, 150, 1.0)">
                         <div class="duration">1 месяц</div>
                         <div class="stars"><i class="fa-solid fa-star"></i> 150 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 1.0 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="selectSub('Premium', 3, 199, 1.5)">
-                        <div class="duration">3 месяца</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 199 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 1.5 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="selectSub('Premium', 6, 249, 3.0)">
-                        <div class="duration">6 месяцев</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 249 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 3.0 USDT</div>
-                    </div>
-                    <div class="price-card" onclick="selectSub('Premium', 12, 400, 3.5)">
-                        <div class="duration">12 месяцев</div>
-                        <div class="stars"><i class="fa-solid fa-star"></i> 400 Stars</div>
-                        <div class="crypto"><i class="fa-brands fa-ethereum"></i> 3.5 USDT</div>
+                        <div class="crypto">1.0 USDT</div>
                     </div>
                 </div>
             </div>
@@ -552,39 +365,26 @@
 
     <div id="screen-profile" class="app-screen">
         <div class="menu-group" style="padding: 16px;">
-            <div class="promo-title"><i class="fa-solid fa-users"></i> Реферальная система</div>
-            <div style="font-size: 14px; margin-bottom: 6px;">Приглашено друзей: <strong id="ref-count">0</strong></div>
-            <div style="font-size: 12px; color: var(--text-gray);">Твоя ссылка для друга:</div>
-            
+            <div class="promo-title">Реферальная ссылка</div>
             <div class="ref-container">
-                <div class="ref-box" id="ref-link">https://t.me/PulseToolBot?start=000000</div>
+                <div class="ref-box" id="ref-link">Загрузка...</div>
                 <button class="copy-btn" id="copy-btn"><i class="fa-regular fa-copy"></i></button>
             </div>
-            
-            <div class="details-btn" id="details-toggle">Подробнее...</div>
-            <div class="ref-details" id="details-block">
-                Приглашайте друзей и получайте бонусы!<br><br>
-                <strong>Как это работает:</strong><br>
-                1. Отправьте другу вашу реферальную ссылку.<br>
-                2. Друг получает бесплатный доступ на 48 часов.<br>
-                3. Если друг покупает ключ — вы получаете подписку <strong>Lite на 7 дней</strong>.
-            </div>
         </div>
+    </div>
 
-        <div class="menu-group" style="padding: 16px;">
-            <div class="promo-title"><i class="fa-solid fa-ticket"></i> Активация промокода</div>
-            <div class="input-container">
-                <input type="text" class="promo-input" id="promo-field" placeholder="RC-VC-XXXXX">
-                <button class="promo-btn" id="promo-submit-btn">ОК</button>
-            </div>
+    <div class="modal" id="pay-modal">
+        <div class="modal-content">
+            <div class="modal-title" id="modal-title">Выбор оплаты</div>
+            <button class="modal-btn btn-stars" onclick="startPayment('stars')"><i class="fa-solid fa-star"></i> Telegram Stars</button>
+            <button class="modal-btn btn-crypto" onclick="startPayment('crypto')"><i class="fa-solid fa-wallet"></i> CryptoBot (USDT)</button>
+            <button class="modal-btn btn-close" onclick="closePayModal()">Отмена</button>
         </div>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchScreen('home', this)"><i class="fa-solid fa-house"></i><span>Главная</span></div>
         <div class="nav-item" onclick="switchScreen('subscription', this)"><i class="fa-solid fa-credit-card"></i><span>Подписка</span></div>
-        <div class="nav-item" onclick="tg.HapticFeedback.impactOccurred('light')"><i class="fa-solid fa-magnifying-glass"></i><span>Поиск</span></div>
-        <div class="nav-item" onclick="tg.HapticFeedback.impactOccurred('light')"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Генератор</span></div>
         <div class="nav-item" onclick="switchScreen('profile', this)"><i class="fa-solid fa-user"></i><span>Профиль</span></div>
     </div>
 
@@ -592,6 +392,8 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
+
+        let selectedOrder = null;
 
         function switchScreen(screenName, element) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
@@ -611,108 +413,61 @@
                 document.querySelector('.prem-tab').classList.add('active');
                 document.getElementById('pane-premium').classList.add('active');
             }
-            tg.HapticFeedback.impactOccurred('light');
         }
 
-        function selectSub(planType, months, stars, crypto) {
-            tg.sendData(JSON.stringify({
-                action: "buy_sub",
-                type: planType,
-                duration_months: months,
-                stars_price: stars,
-                crypto_price: crypto
-            }));
-            tg.close();
+        function openPayModal(planType, months, stars, crypto) {
+            selectedOrder = { planType, months, stars, crypto };
+            document.getElementById('modal-title').innerText = `${planType} на ${months} мес.`;
+            document.getElementById('pay-modal').classList.add('active');
+            tg.HapticFeedback.impactOccurred('medium');
         }
 
-        // УМНЫЙ ПАРСИНГ ПРОФИЛЯ (Из WebApp API или из URL инлайн-кнопки)
-        const urlParams = new URLSearchParams(window.location.search);
-        const hasUrlParams = urlParams.has('id');
+        function closePayModal() {
+            document.getElementById('pay-modal').classList.remove('active');
+        }
 
-        if ((tg.initDataUnsafe && tg.initDataUnsafe.user) || hasUrlParams) {
-            // Берем данные откуда получилось достучаться
-            const uId = tg.initDataUnsafe?.user?.id || urlParams.get('id');
-            const uFirstName = tg.initDataUnsafe?.user?.first_name || urlParams.get('name') || "Пользователь";
-            const uLastName = tg.initDataUnsafe?.user?.last_name || "";
-            const uUsername = tg.initDataUnsafe?.user?.username || urlParams.get('username') || "";
-            const uPhoto = tg.initDataUnsafe?.user?.photo_url || null;
+        // ЗАПУСК НА ТИВНОЙ ОПЛАТЫ ВНУТРИ WEBAPP
+        function startPayment(method) {
+            closePayModal();
+            if (!selectedOrder) return;
 
-            document.getElementById('user-name').innerText = uFirstName + (uLastName ? ' ' + uLastName : '');
-            document.getElementById('user-username').innerText = uUsername ? '@' + uUsername : '';
-            document.getElementById('user-id').innerText = 'ID: ' + uId;
-            document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${uId}`;
+            // Формируем специальную инлайн-строку для бота
+            const queryData = `${method}_${selectedOrder.planType}_${selectedOrder.months}_${method === 'stars' ? selectedOrder.stars : selectedOrder.crypto}`;
             
-            if (uPhoto) {
-                document.getElementById('user-avatar').innerHTML = `<img src="${uPhoto}" alt="Avatar">`;
-            }
-
-            let options = { day: 'numeric', month: 'long', year: 'numeric' };
-            document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
-        } else {
-            // Заглушка для чистого браузера на ПК
-            document.getElementById('user-name').innerText = "Локальный тест";
-            document.getElementById('user-username').innerText = "@test_user";
-            document.getElementById('user-id').innerText = "ID: 123456789";
-            document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=123456789";
-            document.getElementById('reg-date').innerText = "Сегодня";
+            // Переключаем Mini App в режим инлайн-запроса к нашему боту
+            tg.switchInlineQuery(queryData, ['users', 'chats', 'bots']);
         }
 
-        // Остальная логика (промокоды, темы, рефералка)
-        let subscription = urlParams.get('sub');
-        const subElement = document.getElementById('sub-status');
-        if (subscription && subElement) {
-            subscription = subscription.replace(/_/g, " ");
-            subElement.innerText = subscription;
-            subElement.style.color = (subscription !== "Нет") ? "var(--success-green)" : "var(--accent-blue)";
-        }
+        // ЧТЕНИЕ ПАРАМЕТРОВ ССЫЛКИ
+        const urlParams = new URLSearchParams(window.location.search);
+        const uId = urlParams.get('id') || tg.initDataUnsafe?.user?.id || "000000";
+        const uName = urlParams.get('name') || tg.initDataUnsafe?.user?.first_name || "Пользователь";
+        const uUsername = urlParams.get('username') || tg.initDataUnsafe?.user?.username || "";
+        const subParam = urlParams.get('sub') || "Нет";
+
+        document.getElementById('user-name').innerText = uName;
+        document.getElementById('user-username').innerText = uUsername ? '@' + uUsername : '';
+        document.getElementById('user-id').innerText = 'ID: ' + uId;
+        document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${uId}`;
+        document.getElementById('sub-status').innerText = subParam.replace(/_/g, " ");
+        document.getElementById('user-balance').innerText = '100 ₽';
+
+        let options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
 
         document.getElementById('copy-btn').addEventListener('click', function() {
-            const refLinkText = document.getElementById('ref-link').innerText;
-            navigator.clipboard.writeText(refLinkText).then(() => {
+            navigator.clipboard.writeText(document.getElementById('ref-link').innerText).then(() => {
                 tg.HapticFeedback.notificationOccurred('success');
-                const icon = this.querySelector('i');
-                icon.className = 'fa-solid fa-check';
-                setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500);
             });
         });
 
-        const detailsToggle = document.getElementById('details-toggle');
-        const detailsBlock = document.getElementById('details-block');
-        detailsToggle.addEventListener('click', () => {
-            if (detailsBlock.style.display === 'block') {
-                detailsBlock.style.display = 'none';
-                detailsToggle.innerText = 'Подробнее...';
-            } else {
-                detailsBlock.style.display = 'block';
-                detailsToggle.innerText = 'Скрыть';
-            }
-            tg.HapticFeedback.impactOccurred('light');
-        });
-
-        document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
-
-        document.getElementById('promo-submit-btn').addEventListener('click', () => {
-            const promoValue = document.getElementById('promo-field').value;
-            if(promoValue.trim() !== "") {
-                tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
-                tg.close();
-            }
-        });
-
         const themeBtn = document.getElementById('theme-btn');
-        function updateThemeIcon() {
-            themeBtn.innerHTML = (document.documentElement.getAttribute('data-theme') === 'light') ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-        }
-        if (tg.colorScheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-        updateThemeIcon();
-
         themeBtn.addEventListener('click', () => {
             if (document.documentElement.getAttribute('data-theme') === 'light') {
                 document.documentElement.removeAttribute('data-theme');
             } else {
                 document.documentElement.setAttribute('data-theme', 'light');
             }
-            updateThemeIcon();
             tg.HapticFeedback.impactOccurred('medium');
         });
     </script>
