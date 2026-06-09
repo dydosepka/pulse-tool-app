@@ -18,6 +18,7 @@
             --border-color: #1c1c1e;
             --input-bg: #1c1c1e;
             --accent-orange: #ff9500;
+            --success-green: #2ecc71;
         }
 
         /* Светлая тема */
@@ -30,6 +31,7 @@
             --border-color: #e5e5ea;
             --input-bg: #e5e5ea;
             --accent-orange: #ff9500;
+            --success-green: #27ae60;
         }
 
         body {
@@ -439,7 +441,7 @@
             </div>
             <div class="stat-item">
                 <div class="label">Подписка</div>
-                <div class="value" id="sub-status" style="color: var(--accent-blue);">Нет</div>
+                <div class="value" id="sub-status">Нет</div>
             </div>
             <div class="stat-item">
                 <div class="label">Баланс</div>
@@ -635,7 +637,15 @@
             tg.close();
         }
 
-        // Заполнение данных Telegram API
+        // =====================================================================
+        // ОБРАБОТКА И ДЕКОДИРОВАНИЕ СТАТУСА ПОДПИСКИ ИЗ URL-ПАРАМЕТРОВ
+        // =====================================================================
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Заполнение данных Telegram API и подписки
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
             document.getElementById('user-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
@@ -650,6 +660,24 @@
             document.getElementById('user-username').innerText = "@kos_stepanov";
             document.getElementById('user-id').innerText = "ID: 987654321";
             document.getElementById('reg-date').innerText = "8 июня 2026 г.";
+        }
+
+        // Ловим подписку и вставляем её в профиль
+        let subscription = getQueryParam('sub');
+        const subElement = document.getElementById('sub-status');
+
+        if (subscription && subElement) {
+            // Заменяем нижние подчеркивания обратно на нормальные пробелы
+            subscription = subscription.replace(/_/g, " ");
+            
+            subElement.innerText = subscription;
+            
+            // Если подписка куплена и активна (не "Нет"), красим её в зелёный цвет
+            if (subscription !== "Нет") {
+                subElement.style.color = "var(--success-green)";
+            } else {
+                subElement.style.color = "var(--accent-blue)";
+            }
         }
 
         // Кнопка копирования ссылки
