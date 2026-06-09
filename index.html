@@ -408,7 +408,7 @@
             color: var(--accent-blue);
         }
 
-        /* --- СТИЛИ ДЛЯ ПОПОЛНЕНИЯ БАЛАНСА --- */
+        /* Стиль кнопки Пополнить в профиле */
         .top-up-btn {
             width: 100%;
             background-color: var(--card-bg);
@@ -425,13 +425,39 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-sizing: border-box;
         }
         
         .top-up-btn:active {
             background-color: var(--input-bg);
         }
 
-        .topup-modal {
+        /* Стиль кнопки Админки в профиле */
+        .admin-btn {
+            width: 100%;
+            background-color: #ff9500;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background-color 0.2s;
+            display: none; /* Скрыта по умолчанию, включается через JS */
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-sizing: border-box;
+        }
+        
+        .admin-btn:active {
+            background-color: #cc7a00;
+        }
+
+        /* Общие стили для модальных окон */
+        .topup-modal, .admin-modal {
             display: none;
             position: fixed;
             z-index: 9999;
@@ -444,7 +470,7 @@
             justify-content: center;
         }
 
-        .topup-content {
+        .topup-content, .admin-content {
             background-color: #1c1c1e;
             border: 1px solid #2c2c2e;
             border-radius: 20px;
@@ -454,6 +480,10 @@
             box-sizing: border-box;
             position: relative;
             color: #ffffff;
+        }
+
+        .admin-content {
+            border-color: #ff9500; /* Оранжевая обводка для админки */
         }
 
         .close-modal-btn {
@@ -476,6 +506,14 @@
             font-size: 18px;
             text-align: center;
             color: #007aff;
+        }
+
+        .admin-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #ff9500;
         }
 
         .instruction-steps {
@@ -522,6 +560,39 @@
         .modal-promo-btn:active {
             background-color: #0056b3;
         }
+
+        .admin-buttons-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .adm-action-btn {
+            width: 100%;
+            background-color: #2c2c2e;
+            color: #ffffff;
+            border: 1px solid #3a3a3c;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .adm-action-btn:active {
+            background-color: #3a3a3c;
+        }
+
+        .adm-action-btn i {
+            color: #ff9500;
+            width: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -563,7 +634,7 @@
         <div class="menu-group">
             <div class="menu-item" id="close-app-btn">
                 <i class="fa-solid fa-robot icon"></i>
-                <span class="title">Открыть ботаspan>
+                <span class="title">Открыть бота</span>
                 <i class="fa-solid fa-chevron-right arrow"></i>
             </div>
             <div class="menu-item">
@@ -638,7 +709,7 @@
                     <li><i class="fa-solid fa-check prem-color"></i> Приоритетные обновления контента</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Приват чат</li>
                 </ul>
-                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс in чат</div>
+                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс в чат</div>
                 
                 <div class="pricing-grid">
                     <div class="price-card" onclick="selectSub('Premium', 1, 150, 1.0)">
@@ -687,7 +758,13 @@
             </div>
         </div>
 
-        <button class="top-up-btn" onclick="openTopUpModal()">💰 Пополнить баланс</button>
+        <button class="top-up-btn" onclick="openTopUpModal()">
+            <i class="fa-solid fa-wallet"></i> Пополнить баланс
+        </button>
+
+        <button id="admin-panel-btn" class="admin-btn" onclick="openAdminModal()">
+            <i class="fa-solid fa-user-gear"></i> Админ-панель
+        </button>
 
         <div class="menu-group" style="padding: 16px;">
             <div class="promo-title"><i class="fa-solid fa-ticket"></i> Активация промокода</div>
@@ -706,7 +783,7 @@
             
             <div class="instruction-steps">
                 <div class="step"><b>1.</b> Написать владельцу проекта PulseTool — <a href="https://t.me/DefaultSq" target="_blank">@DefaultSq</a></div>
-                <div class="step"><b>2.</b> Написать сообщение: <i>"Здравствуйте, хочу пополнить свой баланс in PulseTool"</i></div>
+                <div class="step"><b>2.</b> Написать сообщение: <i>"Здравствуйте, хочу пополнить свой баланс в PulseTool"</i></div>
                 <div class="step"><b>3.</b> После этого вам ответит владелец и спросит сумму пополнения, а также способ, через который вам будет удобнее оплатить.</div>
                 <div class="step"><b>4.</b> Оплатите выбранным способом и подтвердите перевод владельцу.</div>
                 <div class="step"><b>5.</b> Нажмите кнопку ниже <b>«Ввести промокод»</b> и вставьте промокод, который вам выдал владелец.</div>
@@ -715,6 +792,21 @@
             <p class="congrats-text">🎉 Поздравляем, ваш баланс пополнен! Теперь вы можете смело идти покупать подписку, ради которой вы пополняли баланс.</p>
 
             <button class="modal-promo-btn" onclick="handlePromoCodeModal()">🎟️ Ввести промокод</button>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="admin-modal">
+        <div class="admin-content">
+            <span class="close-modal-btn" onclick="closeAdminModal()">&times;</span>
+            
+            <h3>💼 Панель администратора</h3>
+            
+            <div class="admin-buttons-grid">
+                <button class="adm-action-btn" onclick="adminAction('create_promo')"><i class="fa-solid fa-plus"></i> Создать промокод</button>
+                <button class="adm-action-btn" onclick="adminAction('give_sub')"><i class="fa-solid fa-crown"></i> Выдать подписку</button>
+                <button class="adm-action-btn" onclick="adminAction('edit_balance')"><i class="fa-solid fa-wallet"></i> Изменить баланс</button>
+                <button class="adm-action-btn" onclick="adminAction('bot_stats')"><i class="fa-solid fa-chart-simple"></i> Статистика бота</button>
+            </div>
         </div>
     </div>
 
@@ -730,6 +822,9 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
+
+        // Список юзернеймов, которым разрешена админка (без @)
+        const ALLOWED_ADMINS = ['DefaultSq'];
 
         function switchScreen(screenName, element) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
@@ -763,7 +858,15 @@
             tg.close();
         }
 
-        // ПАРСИНГ ПРОФИЛЯ
+        // Проверка прав администратора
+        function checkAdminPrivileges(username) {
+            if (username && ALLOWED_ADMINS.includes(username)) {
+                const adminBtn = document.getElementById('admin-panel-btn');
+                if (adminBtn) adminBtn.style.display = 'flex';
+            }
+        }
+
+        // ПАРСИНГ ПАРАМЕТРОВ ПРОФИЛЯ
         const urlParams = new URLSearchParams(window.location.search);
         const hasUrlParams = urlParams.has('id');
 
@@ -784,12 +887,18 @@
 
             let options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
+            
+            // Включаем админку, если ник в списке разрешенных
+            checkAdminPrivileges(uUsername);
         } else {
             document.getElementById('user-name').innerText = "Локальный тест";
-            document.getElementById('user-username').innerText = "@test_user";
+            document.getElementById('user-username').innerText = "@DefaultSq";
             document.getElementById('user-id').innerText = "ID 123456789";
             document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=123456789";
             document.getElementById('reg-date').innerText = "Сегодня";
+            
+            // На локальном тесте тоже выведем панель для проверки верстки
+            checkAdminPrivileges("DefaultSq");
         }
 
         let subscription = urlParams.get('sub');
@@ -833,7 +942,7 @@
             }
         });
 
-        // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ
+        // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ БАЛАНСА
         function openTopUpModal() {
             document.getElementById('topup-modal').style.display = 'flex';
             tg.HapticFeedback.impactOccurred('medium');
@@ -846,19 +955,65 @@
 
         function handlePromoCodeModal() {
             closeTopUpModal();
-            // Фокусируемся на существующем инпуте промокода в профиле
             const field = document.getElementById('promo-field');
             field.focus();
             field.scrollIntoView({ behavior: 'smooth' });
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('topup-modal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
+        // МОДАЛЬНОЕ ОКНО АДМИН-ПАНЕЛИ
+        function openAdminModal() {
+            document.getElementById('admin-modal').style.display = 'flex';
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        // Обработка действий в админке
+        function adminAction(actionType) {
+            tg.HapticFeedback.impactOccurred('light');
+            
+            if (actionType === 'create_promo') {
+                let code = prompt("Введите название нового промокода:");
+                let reward = prompt("Что дает промокод? (например: 100 или Premium_1):");
+                if(code && reward) {
+                    alert(`Запрос отправлен: Создать промокод ${code} с бонусом ${reward}`);
+                }
+            } 
+            else if (actionType === 'give_sub') {
+                let targetId = prompt("Введите Telegram ID пользователя:");
+                let subType = prompt("Какой тариф выдать? (Lite или Premium):");
+                if(targetId && subType) {
+                    alert(`Выдаем подписку ${subType} для ID ${targetId}`);
+                }
+            } 
+            else if (actionType === 'edit_balance') {
+                let targetId = prompt("Введите Telegram ID пользователя:");
+                let amount = prompt("Какую сумму установить на баланс? (в рублях):");
+                if(targetId && amount) {
+                    alert(`Меняем баланс пользователя ${targetId} на сумму ${amount} ₽`);
+                }
+            } 
+            else if (actionType === 'bot_stats') {
+                alert("Статистика: Всего пользователей в БД: Загрузка...");
             }
         }
 
+        // Закрытие окон при тапе вне контента
+        window.onclick = function(event) {
+            const topupModal = document.getElementById('topup-modal');
+            const adminModal = document.getElementById('admin-modal');
+            if (event.target == topupModal) {
+                topupModal.style.display = 'none';
+            }
+            if (event.target == adminModal) {
+                adminModal.style.display = 'none';
+            }
+        }
+
+        // Переключение тем
         const themeBtn = document.getElementById('theme-btn');
         function updateThemeIcon() {
             themeBtn.innerHTML = (document.documentElement.getAttribute('data-theme') === 'light') ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
