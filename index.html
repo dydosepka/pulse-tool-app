@@ -139,7 +139,6 @@
             font-weight: 600;
         }
 
-        /* Экраны приложения */
         .app-screen {
             display: none;
         }
@@ -148,7 +147,6 @@
             display: block;
         }
 
-        /* Меню групп */
         .menu-group {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -190,7 +188,6 @@
             font-size: 14px;
         }
 
-        /* Поля ввода и Промокоды */
         .promo-title {
             font-size: 14px;
             color: var(--text-gray);
@@ -225,7 +222,6 @@
             cursor: pointer;
         }
 
-        /* Реферальный блок */
         .ref-container {
             display: flex;
             gap: 8px;
@@ -276,7 +272,6 @@
             color: var(--text-gray);
         }
 
-        /* ВКЛАДКА ПОДПИСОК */
         .sub-tabs {
             display: flex;
             background-color: var(--card-bg);
@@ -378,7 +373,6 @@
             display: block;
         }
 
-        /* Таб-бар */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -526,7 +520,7 @@
                     <li><i class="fa-solid fa-check prem-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Профессиональные шаблоны и таблицы</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Приоритетные обновления контента</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Приват чат (делитесь идеями развития)</li>
+                    <li><i class="fa-solid fa-check prem-color"></i> Приват чат</li>
                 </ul>
                 <div style="font-size: 11px; color:var(--text-gray); margin-bottom:12px; text-align:center;">Выбирай срок, бот отправит инвойс в чат</div>
                 
@@ -569,12 +563,11 @@
             
             <div class="details-btn" id="details-toggle">Подробнее...</div>
             <div class="ref-details" id="details-block">
-                Приглашайте друзей и получайте бонусы за каждое подключение!<br><br>
+                Приглашайте друзей и получайте бонусы!<br><br>
                 <strong>Как это работает:</strong><br>
                 1. Отправьте другу вашу реферальную ссылку.<br>
                 2. Друг получает бесплатный доступ на 48 часов.<br>
-                3. Если друг покупает ключ — вы получаете подписку <strong>Lite на 7 дней</strong>. <br><br>
-                — <i>PulseTool</i>
+                3. Если друг покупает ключ — вы получаете подписку <strong>Lite на 7 дней</strong>.
             </div>
         </div>
 
@@ -600,21 +593,17 @@
         tg.expand();
         tg.ready();
 
-        // Переключение экранов
         function switchScreen(screenName, element) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            
             document.getElementById('screen-' + screenName).classList.add('active');
             element.classList.add('active');
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Переключение между Lite и Premium на экране подписок
         function toggleSubPlan(plan) {
             document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.sub-pane').forEach(p => p.classList.remove('active'));
-            
             if(plan === 'lite') {
                 document.querySelector('.lite-tab').classList.add('active');
                 document.getElementById('pane-lite').classList.add('active');
@@ -625,7 +614,6 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Отправка боту информации о покупке подписки
         function selectSub(planType, months, stars, crypto) {
             tg.sendData(JSON.stringify({
                 action: "buy_sub",
@@ -637,46 +625,47 @@
             tg.close();
         }
 
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+        // УМНЫЙ ПАРСИНГ ПРОФИЛЯ (Из WebApp API или из URL инлайн-кнопки)
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasUrlParams = urlParams.has('id');
 
-        // Заполнение данных Telegram API и подписки
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
-            document.getElementById('user-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-            document.getElementById('user-username').innerText = user.username ? '@' + user.username : '';
-            document.getElementById('user-id').innerText = 'ID: ' + user.id;
-            document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${user.id}`;
+        if ((tg.initDataUnsafe && tg.initDataUnsafe.user) || hasUrlParams) {
+            // Берем данные откуда получилось достучаться
+            const uId = tg.initDataUnsafe?.user?.id || urlParams.get('id');
+            const uFirstName = tg.initDataUnsafe?.user?.first_name || urlParams.get('name') || "Пользователь";
+            const uLastName = tg.initDataUnsafe?.user?.last_name || "";
+            const uUsername = tg.initDataUnsafe?.user?.username || urlParams.get('username') || "";
+            const uPhoto = tg.initDataUnsafe?.user?.photo_url || null;
+
+            document.getElementById('user-name').innerText = uFirstName + (uLastName ? ' ' + uLastName : '');
+            document.getElementById('user-username').innerText = uUsername ? '@' + uUsername : '';
+            document.getElementById('user-id').innerText = 'ID: ' + uId;
+            document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${uId}`;
             
+            if (uPhoto) {
+                document.getElementById('user-avatar').innerHTML = `<img src="${uPhoto}" alt="Avatar">`;
+            }
+
             let options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
         } else {
-            // Тестовые данные для браузера (теперь они меняются в ОДНОМ месте)
-            document.getElementById('user-name').innerText = "Константин";
-            document.getElementById('user-username').innerText = "@kos_stepanov";
-            document.getElementById('user-id').innerText = "ID: 987654321";
-            document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=987654321";
-            document.getElementById('reg-date').innerText = "8 июня 2026 г.";
+            // Заглушка для чистого браузера на ПК
+            document.getElementById('user-name').innerText = "Локальный тест";
+            document.getElementById('user-username').innerText = "@test_user";
+            document.getElementById('user-id').innerText = "ID: 123456789";
+            document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=123456789";
+            document.getElementById('reg-date').innerText = "Сегодня";
         }
 
-        // Ловим подписку и вставляем её в профиль
-        let subscription = getQueryParam('sub');
+        // Остальная логика (промокоды, темы, рефералка)
+        let subscription = urlParams.get('sub');
         const subElement = document.getElementById('sub-status');
-
         if (subscription && subElement) {
             subscription = subscription.replace(/_/g, " ");
             subElement.innerText = subscription;
-            
-            if (subscription !== "Нет") {
-                subElement.style.color = "var(--success-green)";
-            } else {
-                subElement.style.color = "var(--accent-blue)";
-            }
+            subElement.style.color = (subscription !== "Нет") ? "var(--success-green)" : "var(--accent-blue)";
         }
 
-        // Кнопка копирования ссылки
         document.getElementById('copy-btn').addEventListener('click', function() {
             const refLinkText = document.getElementById('ref-link').innerText;
             navigator.clipboard.writeText(refLinkText).then(() => {
@@ -687,7 +676,6 @@
             });
         });
 
-        // Разворачивание реферального описания
         const detailsToggle = document.getElementById('details-toggle');
         const detailsBlock = document.getElementById('details-block');
         detailsToggle.addEventListener('click', () => {
@@ -711,14 +699,9 @@
             }
         });
 
-        // Переключение тем
         const themeBtn = document.getElementById('theme-btn');
         function updateThemeIcon() {
-            if (document.documentElement.getAttribute('data-theme') === 'light') {
-                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>'; 
-            } else {
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';  
-            }
+            themeBtn.innerHTML = (document.documentElement.getAttribute('data-theme') === 'light') ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
         }
         if (tg.colorScheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
         updateThemeIcon();
