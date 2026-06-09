@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PulseTool</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajaxlibs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* Темная тема (по умолчанию) */
@@ -408,45 +408,120 @@
             color: var(--accent-blue);
         }
 
-        /* НАДСТРОЙКА: СТИЛИ МОДАЛЬНОГО ОКНА ВЫБОРА МЕТОДА ОПЛАТЫ */
-        .pay-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-        }
-        .pay-modal.active { display: flex; }
-        .pay-modal-content {
+        /* --- СТИЛИ ДЛЯ ПОПОЛНЕНИЯ БАЛАНСА --- */
+        .top-up-btn {
+            width: 100%;
             background-color: var(--card-bg);
+            color: var(--text-color);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            max-width: 320px;
-            text-align: center;
-        }
-        .pay-modal-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
-        .pay-modal-btn {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
+            padding: 14px;
+            font-size: 16px;
             font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
+            margin-bottom: 16px;
+            transition: background-color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
-        .btn-stars { background-color: #ffb300; color: #000000; }
-        .btn-crypto { background-color: #007aff; color: #ffffff; }
-        .btn-cancel { background-color: #2c2c2e; color: #ffffff; margin-bottom: 0; }
+        
+        .top-up-btn:active {
+            background-color: var(--input-bg);
+        }
+
+        .topup-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .topup-content {
+            background-color: #1c1c1e;
+            border: 1px solid #2c2c2e;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 380px;
+            padding: 24px;
+            box-sizing: border-box;
+            position: relative;
+            color: #ffffff;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            color: #8e8e93;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal-btn:hover {
+            color: #ffffff;
+        }
+
+        .topup-content h3 {
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 18px;
+            text-align: center;
+            color: #007aff;
+        }
+
+        .instruction-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #e5e5ea;
+        }
+        
+        .step a {
+            color: #007aff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .congrats-text {
+            font-size: 13px;
+            color: #34c759;
+            line-height: 1.4;
+            margin-top: 16px;
+            margin-bottom: 20px;
+            background: rgba(52, 199, 89, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .modal-promo-btn {
+            width: 100%;
+            background-color: #007aff;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .modal-promo-btn:active {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -488,7 +563,7 @@
         <div class="menu-group">
             <div class="menu-item" id="close-app-btn">
                 <i class="fa-solid fa-robot icon"></i>
-                <span class="title">Открыть бота</span>
+                <span class="title">Открыть ботаspan>
                 <i class="fa-solid fa-chevron-right arrow"></i>
             </div>
             <div class="menu-item">
@@ -523,9 +598,10 @@
                 <div class="promo-title lite-color"><i class="fa-solid fa-bolt"></i> В подписку Lite входит</div>
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check lite-color"></i> Эксклюзивные инструменты и парсеры</li>
-                    <li><i class="fa-solid fa-check lite-color"></i> Авто-скрипты для Telegram и ВКонтакте</li>
+                    <li><i class="fa-solid fa-check lite-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
                 </ul>
-                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выберите срок для моментальной оплаты</div>
+                
+                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс в чат</div>
                 
                 <div class="pricing-grid">
                     <div class="price-card" onclick="selectSub('Lite', 1, 99, 0.55)">
@@ -557,12 +633,12 @@
                 <div class="promo-title prem-color"><i class="fa-solid fa-crown"></i> В подписку Premium входит</div>
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check prem-color"></i> Эксклюзивные инструменты и парсеры</li>
-                    <li><i class="fa-solid fa-check prem-color"></i> Авто-скрипты для Telegram и ВКонтакте</li>
+                    <li><i class="fa-solid fa-check prem-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Профессиональные шаблоны и таблицы</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Приоритетные обновления контента</li>
                     <li><i class="fa-solid fa-check prem-color"></i> Приват чат</li>
                 </ul>
-                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выберите срок для моментальной оплаты</div>
+                <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс in чат</div>
                 
                 <div class="pricing-grid">
                     <div class="price-card" onclick="selectSub('Premium', 1, 150, 1.0)">
@@ -611,6 +687,8 @@
             </div>
         </div>
 
+        <button class="top-up-btn" onclick="openTopUpModal()">💰 Пополнить баланс</button>
+
         <div class="menu-group" style="padding: 16px;">
             <div class="promo-title"><i class="fa-solid fa-ticket"></i> Активация промокода</div>
             <div class="input-container">
@@ -620,16 +698,23 @@
         </div>
     </div>
 
-    <div class="pay-modal" id="payment-modal">
-        <div class="pay-modal-content">
-            <div class="pay-modal-title" id="pay-modal-title">Способ оплаты</div>
-            <button class="pay-modal-btn btn-stars" onclick="processNativePayment('stars')">
-                <i class="fa-solid fa-star"></i> Оплатить через Telegram Stars
-            </button>
-            <button class="pay-modal-btn btn-crypto" onclick="processNativePayment('crypto')">
-                <i class="fa-brands fa-ethereum"></i> Оплатить через CryptoBot
-            </button>
-            <button class="pay-modal-btn btn-cancel" onclick="closePayModal()">Отмена</button>
+    <div id="topup-modal" class="topup-modal">
+        <div class="topup-content">
+            <span class="close-modal-btn" onclick="closeTopUpModal()">&times;</span>
+            
+            <h3>Инструкция пополнению баланса</h3>
+            
+            <div class="instruction-steps">
+                <div class="step"><b>1.</b> Написать владельцу проекта PulseTool — <a href="https://t.me/DefaultSq" target="_blank">@DefaultSq</a></div>
+                <div class="step"><b>2.</b> Написать сообщение: <i>"Здравствуйте, хочу пополнить свой баланс in PulseTool"</i></div>
+                <div class="step"><b>3.</b> После этого вам ответит владелец и спросит сумму пополнения, а также способ, через который вам будет удобнее оплатить.</div>
+                <div class="step"><b>4.</b> Оплатите выбранным способом и подтвердите перевод владельцу.</div>
+                <div class="step"><b>5.</b> Нажмите кнопку ниже <b>«Ввести промокод»</b> и вставьте промокод, который вам выдал владелец.</div>
+            </div>
+
+            <p class="congrats-text">🎉 Поздравляем, ваш баланс пополнен! Теперь вы можете смело идти покупать подписку, ради которой вы пополняли баланс.</p>
+
+            <button class="modal-promo-btn" onclick="handlePromoCodeModal()">🎟️ Ввести промокод</button>
         </div>
     </div>
 
@@ -645,12 +730,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
-
-        // СЮДА СТАВЬ ССЫЛКУ НА СВОЙ ПУБЛИЧНЫЙ СЕРВЕР BOT PYTHON (Railway / Ngrok)
-        const BACKEND_URL = "https://твой-бэкенд.railway.app"; 
-
-        let selectedOrder = null;
-        let globalUserId = "000000000";
 
         function switchScreen(screenName, element) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
@@ -673,99 +752,32 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // ПЕРЕРАБОТАННАЯ ФУНКЦИЯ ВЫБОРА ПОДПИСКИ
         function selectSub(planType, months, stars, crypto) {
-            selectedOrder = { planType, months, stars, crypto };
-            document.getElementById('pay-modal-title').innerText = `${planType} - ${months} мес.`;
-            document.getElementById('payment-modal').classList.add('active');
-            tg.HapticFeedback.impactOccurred('medium');
+            tg.sendData(JSON.stringify({
+                action: "buy_sub",
+                type: planType,
+                duration_months: months,
+                stars_price: stars,
+                crypto_price: crypto
+            }));
+            tg.close();
         }
 
-        function closePayModal() {
-            document.getElementById('payment-modal').classList.remove('active');
-            selectedOrder = null;
-        }
-
-        // НАДСТРОЙКА: НАДЭКРАННАЯ БЕСШОВНАЯ ОПЛАТА ПО FETCH-ЗАПРОСУ К БОТУ
-        async function processNativePayment(method) {
-            if (!selectedOrder) return;
-            const modal = document.getElementById('payment-modal');
-            modal.classList.remove('active');
-
-            if (method === 'stars') {
-                try {
-                    const response = await fetch(`${BACKEND_URL}/api/create-stars-invoice`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            user_id: globalUserId,
-                            type: selectedOrder.planType,
-                            months: selectedOrder.months,
-                            price: selectedOrder.stars
-                        })
-                    });
-                    const resData = await response.json();
-                    if (resData.invoice_link) {
-                        // Метод Telegram API — открывает нативную шторку прямо внутри Mini App!
-                        tg.openInvoice(resData.invoice_link, function(status) {
-                            if (status === 'paid') {
-                                tg.showAlert("🎉 Оплата успешна! Подписка активирована.");
-                            } else if (status === 'cancelled') {
-                                tg.showAlert("Платёж отменён.");
-                            } else {
-                                tg.showAlert("Ошибка проведения транзакции.");
-                            }
-                        });
-                    } else {
-                        tg.showAlert("Не удалось сформировать счёт.");
-                    }
-                } catch(e) {
-                    tg.showAlert("Ошибка подключения к серверу оплаты.");
-                }
-            } 
-            else if (method === 'crypto') {
-                try {
-                    const response = await fetch(`${BACKEND_URL}/api/create-crypto-invoice`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            user_id: globalUserId,
-                            type: selectedOrder.planType,
-                            months: selectedOrder.months,
-                            price: selectedOrder.crypto
-                        })
-                    });
-                    const resData = await response.json();
-                    if (resData.pay_url) {
-                        // Открывает вкладку оплаты прямо во внутреннем браузере Telegram поверх Mini App
-                        tg.openLink(resData.pay_url);
-                    } else {
-                        tg.showAlert("Не удалось сгенерировать чек CryptoBot.");
-                    }
-                } catch(e) {
-                    tg.showAlert("Ошибка связи с криптовалютным шлюзом.");
-                }
-            }
-            selectedOrder = null;
-        }
-
-        /* УМНЫЙ ПАРСИНГ ПРОФИЛЯ */
+        // ПАРСИНГ ПРОФИЛЯ
         const urlParams = new URLSearchParams(window.location.search);
         const hasUrlParams = urlParams.has('id');
 
         if ((tg.initDataUnsafe && tg.initDataUnsafe.user) || hasUrlParams) {
-            const uId = tg.initDataUnsafe?.user?.id || urlParams.get('id');
-            globalUserId = uId;
-            const uFirstName = tg.initDataUnsafe?.user?.first_name || urlParams.get('name') || "Пользователь";
-            const uLastName = tg.initDataUnsafe?.user?.last_name || "";
-            const uUsername = tg.initDataUnsafe?.user?.username || urlParams.get('username') || "";
-            const uPhoto = tg.initDataUnsafe?.user?.photo_url || null;
+            const uId = tg.initDataUnsafe.user?.id || urlParams.get('id');
+            const uFirstName = tg.initDataUnsafe.user?.first_name || urlParams.get('name') || "Пользователь";
+            const uLastName = tg.initDataUnsafe.user?.last_name || "";
+            const uUsername = tg.initDataUnsafe.user?.username || urlParams.get('username') || "";
+            const uPhoto = tg.initDataUnsafe.user?.photo_url || null;
 
             document.getElementById('user-name').innerText = uFirstName + (uLastName ? ' ' + uLastName : '');
             document.getElementById('user-username').innerText = uUsername ? '@' + uUsername : '';
             document.getElementById('user-id').innerText = 'ID ' + uId;
             document.getElementById('ref-link').innerText = `https://t.me/PulseToolBot?start=${uId}`;
-            
             if (uPhoto) {
                 document.getElementById('user-avatar').innerHTML = `<img src="${uPhoto}" alt="Avatar">`;
             }
@@ -820,6 +832,32 @@
                 tg.close();
             }
         });
+
+        // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ
+        function openTopUpModal() {
+            document.getElementById('topup-modal').style.display = 'flex';
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        function closeTopUpModal() {
+            document.getElementById('topup-modal').style.display = 'none';
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function handlePromoCodeModal() {
+            closeTopUpModal();
+            // Фокусируемся на существующем инпуте промокода в профиле
+            const field = document.getElementById('promo-field');
+            field.focus();
+            field.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('topup-modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
 
         const themeBtn = document.getElementById('theme-btn');
         function updateThemeIcon() {
