@@ -637,9 +637,6 @@
             tg.close();
         }
 
-        // =====================================================================
-        // ОБРАБОТКА И ДЕКОДИРОВАНИЕ СТАТУСА ПОДПИСКИ ИЗ URL-ПАРАМЕТРОВ
-        // =====================================================================
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
@@ -656,9 +653,11 @@
             let options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
         } else {
+            // Тестовые данные для браузера (теперь они меняются в ОДНОМ месте)
             document.getElementById('user-name').innerText = "Константин";
             document.getElementById('user-username').innerText = "@kos_stepanov";
             document.getElementById('user-id').innerText = "ID: 987654321";
+            document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=987654321";
             document.getElementById('reg-date').innerText = "8 июня 2026 г.";
         }
 
@@ -667,12 +666,9 @@
         const subElement = document.getElementById('sub-status');
 
         if (subscription && subElement) {
-            // Заменяем нижние подчеркивания обратно на нормальные пробелы
             subscription = subscription.replace(/_/g, " ");
-            
             subElement.innerText = subscription;
             
-            // Если подписка куплена и активна (не "Нет"), красим её в зелёный цвет
             if (subscription !== "Нет") {
                 subElement.style.color = "var(--success-green)";
             } else {
