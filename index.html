@@ -935,11 +935,17 @@
         document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
 
         document.getElementById('promo-submit-btn').addEventListener('click', () => {
-            const promoValue = document.getElementById('promo-field').value;
-            if(promoValue.trim() !== "") {
-                tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
-            }
-        });
+    const promoValue = document.getElementById('promo-field').value;
+    if(promoValue.trim() !== "") {
+        // Отправляем данные боту
+        tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
+        
+        // Убрали tg.close(), теперь приложение не закроется
+        
+        // Добавляем уведомление для пользователя
+        alert("Запрос на активацию отправлен в чат с ботом!");
+    }
+});
 
         // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ БАЛАНСА
         function openTopUpModal() {
