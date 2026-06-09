@@ -934,16 +934,25 @@
 
         document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
 
-        document.getElementById('promo-submit-btn').addEventListener('click', () => {
+document.getElementById('promo-submit-btn').addEventListener('click', () => {
     const promoValue = document.getElementById('promo-field').value;
+    
     if(promoValue.trim() !== "") {
-        // Отправляем данные боту
-        tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
+        // Формируем объект
+        const payload = JSON.stringify({
+            action: "activate_promo", 
+            code: promoValue
+        });
         
-        // Убрали tg.close(), теперь приложение не закроется
+        // Отправляем
+        tg.sendData(payload);
         
-        // Добавляем уведомление для пользователя
-        alert("Запрос на активацию отправлен в чат с ботом!");
+        // ВАЖНО: Никакого tg.close() здесь быть не должно!
+        
+        alert("Запрос отправлен в бота!");
+        document.getElementById('promo-field').value = "";
+    } else {
+        alert("Введите промокод!");
     }
 });
 
