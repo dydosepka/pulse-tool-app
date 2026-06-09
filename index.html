@@ -938,7 +938,6 @@
             const promoValue = document.getElementById('promo-field').value;
             if(promoValue.trim() !== "") {
                 tg.sendData(JSON.stringify({action: "activate_promo", code: promoValue}));
-                tg.close();
             }
         });
 
