@@ -933,6 +933,16 @@
         });
 
         document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
+
+document.getElementById('promo-submit-btn').addEventListener('click', () => {
+    const promoValue = document.getElementById('promo-field').value;
+    
+    if(promoValue.trim() !== "") {
+        // Формируем объект
+        const payload = JSON.stringify({
+            action: "activate_promo", 
+            code: promoValue
+        });
         
         // Отправляем
         tg.sendData(payload);
