@@ -803,7 +803,7 @@
         tg.expand();
         tg.ready();
 
-        // Добавлен ваш ник в список админов на фронтенде
+        // Список админов
         const ALLOWED_ADMINS = ['DefaultSq'];
 
         function switchScreen(screenName, element) {
@@ -845,7 +845,7 @@
             }
         }
 
-        // ПАРСИНГ ПАРАМЕТРОВ ПРОФИЛЯ С БД И URL
+        // Парсинг параметров
         const urlParams = new URLSearchParams(window.location.search);
         const hasUrlParams = urlParams.has('id');
 
@@ -877,7 +877,7 @@
             checkAdminPrivileges("DefaultSq");
         }
 
-        // СИНХРОНИЗАЦИЯ БАЛАНСА ИЗ URL СТРОКИ БОТА
+        // Вывод баланса из URL-ссылки бота
         let userBalance = urlParams.get('balance');
         const balanceElement = document.getElementById('user-balance');
         if (userBalance && balanceElement) {
@@ -927,7 +927,7 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Исправленная кнопка промокода (теперь отправляет данные в Telegram)
+        // ОБНОВЛЕННАЯ ФУНКЦИЯ ПРОМОКОДА: отправляет данные, предупреждает и перезапускает Mini App
         function handlePromoCodeModal() {
             closeTopUpModal();
             let promo = prompt("Введите ваш промокод:");
@@ -936,6 +936,12 @@
                     action: "activate_promo",
                     code: promo
                 }));
+                
+                alert("Запрос на активацию отправлен боту! Пожалуйста, перезайдите в приложение, чтобы баланс обновился.");
+                
+                setTimeout(() => {
+                    tg.close();
+                }, 1000);
             }
         }
 
