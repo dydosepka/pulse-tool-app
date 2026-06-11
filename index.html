@@ -766,13 +766,6 @@
             <i class="fa-solid fa-user-gear"></i> Админ-панель
         </button>
 
-        <div class="menu-group" style="padding: 16px;">
-            <div class="promo-title"><i class="fa-solid fa-ticket"></i> Активация промокода</div>
-            <div class="input-container">
-                <input type="text" class="promo-input" id="promo-field" placeholder="RC-VC-XXXXX">
-                <button class="promo-btn" id="promo-submit-btn">ОК</button>
-            </div>
-        </div>
     </div>
 
     <div id="topup-modal" class="topup-modal">
@@ -934,27 +927,7 @@
 
         document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
 
-document.getElementById('promo-submit-btn').addEventListener('click', () => {
-    const promoValue = document.getElementById('promo-field').value;
-    
-    if(promoValue.trim() !== "") {
-        // Формируем объект
-        const payload = JSON.stringify({
-            action: "activate_promo", 
-            code: promoValue
-        });
-        
-        // Отправляем
-        tg.sendData(payload);
-        
-        // ВАЖНО: Никакого tg.close() здесь быть не должно!
-        
-        alert("Запрос отправлен в бота!");
-        document.getElementById('promo-field').value = "";
-    } else {
-        alert("Введите промокод!");
-    }
-});
+
 
         // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ БАЛАНСА
         function openTopUpModal() {
