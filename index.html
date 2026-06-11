@@ -408,7 +408,6 @@
             color: var(--accent-blue);
         }
 
-        /* Стиль кнопки Пополнить в профиле */
         .top-up-btn {
             width: 100%;
             background-color: var(--card-bg);
@@ -432,7 +431,6 @@
             background-color: var(--input-bg);
         }
 
-        /* Стиль кнопки Админки в профиле */
         .admin-btn {
             width: 100%;
             background-color: #ff9500;
@@ -445,7 +443,7 @@
             cursor: pointer;
             margin-bottom: 16px;
             transition: background-color 0.2s;
-            display: none; /* Скрыта по умолчанию, включается через JS */
+            display: none;
             align-items: center;
             justify-content: center;
             gap: 8px;
@@ -456,7 +454,6 @@
             background-color: #cc7a00;
         }
 
-        /* Общие стили для модальных окон */
         .topup-modal, .admin-modal {
             display: none;
             position: fixed;
@@ -483,7 +480,7 @@
         }
 
         .admin-content {
-            border-color: #ff9500; /* Оранжевая обводка для админки */
+            border-color: #ff9500;
         }
 
         .close-modal-btn {
@@ -620,7 +617,7 @@
                 <div class="value" id="reg-date">...</div>
             </div>
             <div class="stat-item">
-                <div class="label">Подписка</div>
+                 <div class="label">Подписка</div>
                 <div class="value" id="sub-status">Нет</div>
             </div>
             <div class="stat-item">
@@ -671,9 +668,7 @@
                     <li><i class="fa-solid fa-check lite-color"></i> Эксклюзивные инструменты и парсеры</li>
                     <li><i class="fa-solid fa-check lite-color"></i> Авто-скрипты для Telegram / ВКонтакте</li>
                 </ul>
-                
                 <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс в чат</div>
-                
                 <div class="pricing-grid">
                     <div class="price-card" onclick="selectSub('Lite', 1, 99, 0.55)">
                         <div class="duration">1 месяц</div>
@@ -710,7 +705,6 @@
                     <li><i class="fa-solid fa-check prem-color"></i> Приват чат</li>
                 </ul>
                 <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 12px; text-align: center;">Выбирай срок, бот отправит инвойс в чат</div>
-                
                 <div class="pricing-grid">
                     <div class="price-card" onclick="selectSub('Premium', 1, 150, 1.0)">
                         <div class="duration">1 месяц</div>
@@ -765,25 +759,20 @@
         <button id="admin-panel-btn" class="admin-btn" onclick="openAdminModal()">
             <i class="fa-solid fa-user-gear"></i> Админ-панель
         </button>
-
     </div>
 
     <div id="topup-modal" class="topup-modal">
         <div class="topup-content">
             <span class="close-modal-btn" onclick="closeTopUpModal()">&times;</span>
-            
             <h3>Инструкция пополнению баланса</h3>
-            
             <div class="instruction-steps">
                 <div class="step"><b>1.</b> Написать владельцу проекта PulseTool — <a href="https://t.me/DefaultSq" target="_blank">@DefaultSq</a></div>
-                <div class="step"><b>2.</b> Написать сообщение: <i>"Здравствуйте, хочу пополнить свой баланс в PulseTool"</i></div>
+                <div class="step"><b>2.</b> Написать сообщение: <i>"Здравствуйте, хочу пополнить свой баланс in PulseTool"</i></div>
                 <div class="step"><b>3.</b> После этого вам ответит владелец и спросит сумму пополнения, а также способ, через который вам будет удобнее оплатить.</div>
                 <div class="step"><b>4.</b> Оплатите выбранным способом и подтвердите перевод владельцу.</div>
-                <div class="step"><b>5.</b> Нажмите кнопку ниже <b>«Ввести промокод»</b> и вставьте промокод, который вам выдал владелец.</div>
+                <div class="step"><b>5.</b> Нажмите кнопку ниже <b>«Ввести промокод»</b> и используйте команду в боте.</div>
             </div>
-
             <p class="congrats-text">🎉 Поздравляем, ваш баланс пополнен! Теперь вы можете смело идти покупать подписку, ради которой вы пополняли баланс.</p>
-
             <button class="modal-promo-btn" onclick="handlePromoCodeModal()">🎟️ Ввести промокод</button>
         </div>
     </div>
@@ -791,9 +780,7 @@
     <div id="admin-modal" class="admin-modal">
         <div class="admin-content">
             <span class="close-modal-btn" onclick="closeAdminModal()">&times;</span>
-            
             <h3>💼 Панель администратора</h3>
-            
             <div class="admin-buttons-grid">
                 <button class="adm-action-btn" onclick="adminAction('create_promo')"><i class="fa-solid fa-plus"></i> Создать промокод</button>
                 <button class="adm-action-btn" onclick="adminAction('give_sub')"><i class="fa-solid fa-crown"></i> Выдать подписку</button>
@@ -816,7 +803,7 @@
         tg.expand();
         tg.ready();
 
-        // Список юзернеймов, которым разрешена админка (без @)
+        // Добавлен ваш ник в список админов на фронтенде
         const ALLOWED_ADMINS = ['DefaultSq'];
 
         function switchScreen(screenName, element) {
@@ -851,7 +838,6 @@
             tg.close();
         }
 
-        // Проверка прав администратора
         function checkAdminPrivileges(username) {
             if (username && ALLOWED_ADMINS.includes(username)) {
                 const adminBtn = document.getElementById('admin-panel-btn');
@@ -859,7 +845,7 @@
             }
         }
 
-        // ПАРСИНГ ПАРАМЕТРОВ ПРОФИЛЯ
+        // ПАРСИНГ ПАРАМЕТРОВ ПРОФИЛЯ С БД И URL
         const urlParams = new URLSearchParams(window.location.search);
         const hasUrlParams = urlParams.has('id');
 
@@ -881,7 +867,6 @@
             let options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('reg-date').innerText = new Date().toLocaleDateString('ru-RU', options) + ' г.';
             
-            // Включаем админку, если ник в списке разрешенных
             checkAdminPrivileges(uUsername);
         } else {
             document.getElementById('user-name').innerText = "Локальный тест";
@@ -889,9 +874,14 @@
             document.getElementById('user-id').innerText = "ID 123456789";
             document.getElementById('ref-link').innerText = "https://t.me/PulseToolBot?start=123456789";
             document.getElementById('reg-date').innerText = "Сегодня";
-            
-            // На локальном тесте тоже выведем панель для проверки верстки
             checkAdminPrivileges("DefaultSq");
+        }
+
+        // СИНХРОНИЗАЦИЯ БАЛАНСА ИЗ URL СТРОКИ БОТА
+        let userBalance = urlParams.get('balance');
+        const balanceElement = document.getElementById('user-balance');
+        if (userBalance && balanceElement) {
+            balanceElement.innerText = userBalance + ' ₽';
         }
 
         let subscription = urlParams.get('sub');
@@ -927,9 +917,6 @@
 
         document.getElementById('close-app-btn').addEventListener('click', () => { tg.close(); });
 
-
-
-        // МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ БАЛАНСА
         function openTopUpModal() {
             document.getElementById('topup-modal').style.display = 'flex';
             tg.HapticFeedback.impactOccurred('medium');
@@ -940,14 +927,18 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
+        // Исправленная кнопка промокода (теперь отправляет данные в Telegram)
         function handlePromoCodeModal() {
             closeTopUpModal();
-            const field = document.getElementById('promo-field');
-            field.focus();
-            field.scrollIntoView({ behavior: 'smooth' });
+            let promo = prompt("Введите ваш промокод:");
+            if (promo) {
+                tg.sendData(JSON.stringify({
+                    action: "activate_promo",
+                    code: promo
+                }));
+            }
         }
 
-        // МОДАЛЬНОЕ ОКНО АДМИН-ПАНЕЛИ
         function openAdminModal() {
             document.getElementById('admin-modal').style.display = 'flex';
             tg.HapticFeedback.impactOccurred('medium');
@@ -958,13 +949,11 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Обработка действий в админке
         function adminAction(actionType) {
             tg.HapticFeedback.impactOccurred('light');
-            
             if (actionType === 'create_promo') {
                 let code = prompt("Введите название нового промокода:");
-                let reward = prompt("Что дает промокод? (например: 100 или Premium_1):");
+                let reward = prompt("Что дает промокод? (например: 100):");
                 if(code && reward) {
                     alert(`Запрос отправлен: Создать промокод ${code} с бонусом ${reward}`);
                 }
@@ -988,7 +977,6 @@
             }
         }
 
-        // Закрытие окон при тапе вне контента
         window.onclick = function(event) {
             const topupModal = document.getElementById('topup-modal');
             const adminModal = document.getElementById('admin-modal');
@@ -1000,7 +988,6 @@
             }
         }
 
-        // Переключение тем
         const themeBtn = document.getElementById('theme-btn');
         function updateThemeIcon() {
             themeBtn.innerHTML = (document.documentElement.getAttribute('data-theme') === 'light') ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
