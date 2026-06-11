@@ -625,7 +625,7 @@
             </div>
             <div class="stat-item">
                 <div class="label">Баланс</div>
-                <div class="value" id="user-balance">0 ₽</div>
+                <div class="value" id="user-balance">100 ₽</div>
             </div>
         </div>
     </div>
@@ -815,6 +815,16 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
+        const urlParams = new URLSearchParams(window.location.search);
+        const balanceFromBot = urlParams.get('balance');
+        
+        if (balanceFromBot !== null) {
+            // Ищем элемент с ID 'user-balance-id' и меняем в нем текст
+            const balElement = document.getElementById('user-balance-id');
+            if (balElement) {
+                balElement.innerText = balanceFromBot + ' ₽';
+            }
+        }
 
         // Список юзернеймов, которым разрешена админка (без @)
         const ALLOWED_ADMINS = ['DefaultSq'];
